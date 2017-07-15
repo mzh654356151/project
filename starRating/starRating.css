@@ -1,0 +1,50 @@
+/*Positioning*/
+/*Box-model*/
+/*Typography*/
+/*Visual*/
+body,div,ul,li,p {
+    padding: 0;
+    margin: 0;
+}
+#star-rating {
+    position: relative;
+    width: 600px;
+    margin: 20px auto;
+    color: #666;
+    font: 12px Helvetica;
+}
+#star-rating span, #star-rating ul {
+    float: left;
+    height: 20px;
+    line-height: 20px;
+}
+ul > li {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    background: url(star.png) no-repeat;
+    list-style-type: none;
+
+}
+#star-rating li.on {
+    background-position: 0 -27px;
+}
+#star-rating p {
+    position: absolute;
+    top: 20px;
+    display: none;
+    width: 160px;
+    height: 60px;
+    padding: 7px 10px 0 10px; 
+    background: url(icon.gif) no-repeat;
+}
+#star-rating strong {
+    padding-left: 10px;
+    color: red;
+}
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
