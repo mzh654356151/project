@@ -92,12 +92,12 @@ EventUtil.addHandle(ul, 'click', function (event) {
 	event = EventUtil.getEvent(event);
 	var target = EventUtil.getTarget(event);
 	if (target.nodeName === 'LI') {
-		var str1 = messages[target.index - 1].split('|')[0],
-		    str2 = messages[target.index - 1].split('|')[1],
-		score = clickScore = target.index;
-		findPoint(score);
-		span.style.display = 'block';
-		span.innerHTML = '<strong>' + score + '</strong>分' + '(' + str2 + ')';
+	    var str1 = messages[target.index - 1].split('|')[0],
+	        str2 = messages[target.index - 1].split('|')[1],
+	    score = clickScore = target.index;
+	    findPoint(score);
+	    span.style.display = 'block';
+	    span.innerHTML = '<strong>' + score + '</strong>分' + '(' + str2 + ')';
 	}
 });
 //点亮对应的星星(class属性为on则将background切换到点亮的星星上)
