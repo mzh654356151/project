@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+	<title>todoApplication</title>
+	<link rel="stylesheet" type="text/css" href="advance.css">
+	<style type="text/css">
+	    [v-cloak] {
+	    	display: none;
+	    }
+	</style>
+</head>
+<body>
+<!-- section 不是一个专用来做容器的标签，专用的是 div -->
+<!-- section 里应该有 标题（h1~6），但文章中推荐用 article 来代替 -->
+  <div class="application">
+    <header class="header">
+      <h1>application</h1>
+    </header>
+    <div class="main">
+      <div class="main-top">
+        <input class="new-todo" v-model="newTodo" @keyup.enter="addTodo" 
+               placeholder="按Enter完成输入">
+      </div>
+      <div class="main-bottom">
+        <ul>
+          <li v-for="todo in filteredTodos" 
+              :class="{ completed: todo.completed, editing: todo == editedTodo }">
+            <div class="show">
+              <input class="toggle" type="checkbox" v-model="todo.completed">
+              <span @dblclick="editTodo(todo)">{{ todo.text }}</span>
+              <!-- delete是Vue的实例方法 -->
+              <button class="delete" @click="removeTodo(todo)">X</button>
+            </div>
+            <input class="editBox" type="text" v-model.lazy="todo.text"
+                   v-todo-focus="todo == editedTodo" @blur="doneEdit(todo)"
+                   @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)">
+          </li>
+        </ul>
+      </div>
+      <footer>
+        <span class="todo-count"><strong>{{ remaining }}</strong>
+        left</span>
+        <ul class="filters">
+          <li><a href="#/all" :class="{ selected: visibility == 'all' }">All</a></li>
+          <li><a href="#/uncompleted" 
+                 :class="{ selected: visibility == 'uncompleted' }">Uncompleted</a></li>
+          <li><a href="#/completed" 
+                 :class="{ selected: visibility == 'completed' }">Completed</a></li>       
+<!--           <li><button class="show-Active">Active</button></li>
+          <li><button class="show-Completed">Completed</button></li>    -->                 
+        </ul>
+        <button class="clear-completed">Clear completed</button>
+      </footer>
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="C:\vue.js"></script>
+  <script type="text/javascript" src="advance.js"></script>
+</body>
+</html>
