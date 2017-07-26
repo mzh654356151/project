@@ -1,0 +1,190 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.application {
+	width: 550px;
+	margin-top: 100px;
+	margin-left: 100px;
+
+}
+.header h1 {
+	text-align: center;
+	font-size: 50px;
+	color: #2bbff3;	
+    opacity: 0.5;
+
+}
+.new-todo, .editBox {
+    width: 100%;
+    padding: 16px 16px 16px 70px;
+    font-size: 24px;
+    color: #4d4d4d;
+    border: none;
+    box-sizing: border-box;
+
+}
+input::-webkit-input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: #e6e6e6;
+}
+input::-moz-input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: #e6e6e6;
+}
+input::-ms-input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: #e6e6e6;
+}
+input::input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: #e6e6e6;
+}
+.main {
+    margin-top: 10px;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    /*box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);*/
+    box-shadow: 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+/*	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
+	            0 25px 50px 0 rgba(0, 0, 0, 0.1);	*/
+}
+.main-bottom {
+    border-bottom: 1px solid #ededed;	
+}
+.main-bottom ul {
+	list-style: none;
+}
+.main-bottom li {
+	font-size: 24px;
+	border-top: 1px solid #ededed;
+}
+.main-bottom li:hover .delete {
+	display: block;
+}
+.main-bottom li.completed span {
+	color: #d9d9d9;
+	text-decoration: line-through;
+}
+.main-bottom li.editing {
+
+}
+.main-bottom li.editing .show {
+    display: none;
+}
+.main-bottom li.editing .editBox {
+    display: block;
+/*    width: 506px;
+    padding: 13px 17px 12px 17px;
+    margin: 0 0 0 43px;*/
+}
+.main-bottom .show {
+    position: relative;
+    /*display: none;*/
+    height: 60px;
+    line-height: 60px;
+
+}
+
+.main-bottom .toggle {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 40px;
+	height: 40px;
+	margin-top: 10px;
+	margin-left: 10px;
+	/*background: none;*/
+/*	appearance: button;
+	-moz-appearance: button;
+	-webkit-appearance: button;*/
+
+}
+.main-bottom span {
+	margin-left: 70px;
+	word-break: break-all;
+	transition: color 0.3s linear;
+
+}
+.main-bottom .delete {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	display: none;
+
+	width: 40px;
+	height: 40px;
+	margin-top: 10px;
+	border: none;
+	color: #2bbff3;	
+	font-size: 30px;
+	font-weight: bold;
+	background: none;	
+}
+
+.main-bottom li .editBox {
+    display: none;
+}
+
+footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;	
+	width: 530px;
+	height: 40px;
+	margin: 0 auto;
+	font-size: 20px;
+	color: gray;
+}
+
+footer .filters {
+	display: flex;
+	align-items: center;
+
+	list-style: none;
+}
+footer .filters li a {
+	padding: 1px 2px;
+    margin-right: 10px;
+	color: inherit;  
+    border: 1px solid transparent;
+    border-radius: 3px;	
+}
+footer .filters a:hover {
+    /*border-color: rgba(175, 47, 47, .1);*/
+    border-color: orange;
+
+}
+footer .filters a.selected {
+    /*border-color: rgba(175, 47, 47, .2);*/
+    border-color: red;
+}
+footer .filters a {
+	text-decoration: none;
+}
+
+footer .clear-completed {
+	font-size: inherit;
+	font-family: inherit;
+	color: inherit;
+	border: none;
+	background: none;
+}
+footer .clear-completed:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+
+
+
+
+
+
