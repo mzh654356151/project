@@ -101,18 +101,15 @@ input::input-placeholder {
 	height: 40px;
 	margin-top: 10px;
 	margin-left: 10px;
-	/*background: none;*/
-/*	appearance: button;
-	-moz-appearance: button;
-	-webkit-appearance: button;*/
-
 }
+
 .main-bottom span {
 	margin-left: 70px;
 	word-break: break-all;
 	transition: color 0.3s linear;
 
 }
+
 .main-bottom .delete {
 	position: absolute;
 	top: 0;
@@ -160,8 +157,8 @@ footer .filters li a {
 footer .filters a:hover {
     /*border-color: rgba(175, 47, 47, .1);*/
     border-color: orange;
-
 }
+
 footer .filters a.selected {
     /*border-color: rgba(175, 47, 47, .2);*/
     border-color: red;
