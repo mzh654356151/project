@@ -87,7 +87,6 @@ input::input-placeholder {
 }
 .main-bottom .show {
     position: relative;
-    /*display: none;*/
     height: 60px;
     line-height: 60px;
 
