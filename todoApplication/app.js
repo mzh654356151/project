@@ -1,6 +1,6 @@
 
 var STORAGE_KEY = 'application-vue.js';
-
+//客户端存储数据
 var todoStorage = {
     fetch: function () {
         var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -67,7 +67,6 @@ var application = new Vue({
     },
     methods: {
         addTodo: function () {
-            // window.location.hash = 'all';
             var text = this.newTodo.trim();
             if (!text) {
                 return
