@@ -99,8 +99,7 @@ var application = new Vue({
             }
         },
         cancelEdit: function (todo) {
-            //这是对编辑框进行切换 editedTodo！= todo 则切换到.show div
-            
+            //这是对编辑框进行切换 editedTodo！= todo 则切换到.show div      
             this.editedTodo = null;           
             todo.text = this.beforeEditCache;
 
