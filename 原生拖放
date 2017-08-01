@@ -30,19 +30,20 @@ function DragDrop (element) {
 	    diffx = 0,
 	    diffy = 0;
 	function handlerEvent (event) {
-		  //getBoundingClientRect包含4个属性：left，top，right，bottom。这些属性给出了元素在页面中相对于视口的位置
-      //也可以用offsetLeft和offsetTop往外叠加得到（如果有边框要考虑边框，加上clientLeft和clientTop，比较麻烦）
+	    //getBoundingClientRect包含4个属性：left，top，right，bottom。这些属性给出了元素在页面中相对于视口的位置
+            //也可以用offsetLeft和offsetTop往外叠加得到（如果有边框要考虑边框，加上clientLeft和clientTop，比较麻烦）
 	    var target = event.target,
+	    
 	        //事件目标元素到页面视口左边的距离
 	        targetX = target.getBoundingClientRect().left, 
 	        targetY = target.getBoundingClientRect().top,
+		
 	        //事件目标元素的父元素(相对定位的元素)到页面视口左边的距离
 	        parentNodeX = target.parentNode.getBoundingClientRect().left,
 	        parentNodeY = target.parentNode.getBoundingClientRect().top;
 	    switch (event.type) {
 	    	case 'mousedown':
 	    	    dragging = target;
-
 	    	    diffx = event.clientX - targetX;	            
 	    	    diffy = event.clientY - targetY;	            
 	            break;
@@ -65,7 +66,7 @@ function DragDrop (element) {
 			element.addEventListener('mousemove', handlerEvent, false)
 			element.addEventListener('mouseup', handlerEvent, false)			
 		},
-    //移除事件处理程序
+		//移除事件处理程序
 		disable: function () {
 			element.removeEventListener('mousedown', handlerEvent, false)
 			element.removeEventListener('mousemove', handlerEvent, false)
