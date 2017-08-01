@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+	<title>原生拖放</title>
+    <style type="text/css">
+        #container {
+          position: relative;
+        }
+        #drag {
+          position: absolute;
+          width: 100px;
+          height: 100px;
+          padding: 10px;
+          background-color: lightblue;
+          cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+  <div id="container">
+    <div id="drag"></div> 
+  </div>
+
+<script type="text/javascript">
+
+function DragDrop (element) {
+  //私有变量和方法
+	var dragging = null,
+	    diffx = 0,
+	    diffy = 0;
+	function handlerEvent (event) {
+		  //getBoundingClientRect包含4个属性：left，top，right，bottom。这些属性给出了元素在页面中相对于视口的位置
+      //也可以用offsetLeft和offsetTop往外叠加得到（如果有边框要考虑边框，加上clientLeft和clientTop，比较麻烦）
+	    var target = event.target,
+	        //事件目标元素到页面视口左边的距离
+	        targetX = target.getBoundingClientRect().left, 
+	        targetY = target.getBoundingClientRect().top,
+	        //事件目标元素的父元素(相对定位的元素)到页面视口左边的距离
+	        parentNodeX = target.parentNode.getBoundingClientRect().left,
+	        parentNodeY = target.parentNode.getBoundingClientRect().top;
+	    switch (event.type) {
+	    	case 'mousedown':
+	    	    dragging = target;
+
+	    	    diffx = event.clientX - targetX;	            
+	    	    diffy = event.clientY - targetY;	            
+	            break;
+	        case 'mousemove':
+	            if (dragging) {
+	            	target.style.left = event.clientX - diffx
+	            	    - parentNodeX + 'px';
+	            	target.style.top = event.clientY - diffy
+	            	    - parentNodeY + 'px';
+	            }
+	            break;
+	        case 'mouseup':
+	            dragging = null;
+	            break;
+	    }
+	}
+	return {
+		enable: function () {
+			element.addEventListener('mousedown', handlerEvent, false)
+			element.addEventListener('mousemove', handlerEvent, false)
+			element.addEventListener('mouseup', handlerEvent, false)			
+		},
+    //移除事件处理程序
+		disable: function () {
+			element.removeEventListener('mousedown', handlerEvent, false)
+			element.removeEventListener('mousemove', handlerEvent, false)
+			element.removeEventListener('mouseup', handlerEvent, false)				
+		}
+	}
+}
+var drag = document.getElementById('drag');
+var dragHandler = new DragDrop(drag);
+dragHandler.enable();
+//移除事件处理程序
+//dragHandler.disable();
+
+</script>
+</body>
+</html>
+
