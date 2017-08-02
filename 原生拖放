@@ -61,6 +61,7 @@ function DragDrop (element) {
 	    }
 	}
 	return {
+	        //注册事件处理程序
 		enable: function () {
 			element.addEventListener('mousedown', handlerEvent, false)
 			element.addEventListener('mousemove', handlerEvent, false)
