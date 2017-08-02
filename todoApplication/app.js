@@ -110,7 +110,7 @@ var application = new Vue({
             this.todos = filters['uncompleted'](this.todos);
         }        
     },
-//自定义指令,将数据行为转为DOM行为    
+    //自定义指令,将数据行为转为DOM行为    
     directives: {
         // 'todo-focus': function (value) {
         //     if (!value) {
