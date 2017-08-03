@@ -127,7 +127,6 @@ var application = new Vue({
             }
         }
     }
-
 })
 
 // var router = new Router();
