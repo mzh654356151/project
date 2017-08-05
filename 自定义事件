@@ -1,0 +1,90 @@
+function EventTarget () {
+	this.handlers = {};
+}
+//一种事件类型的事件处理程序可能有多个，所以用数组保存起来
+EventTarget.prototype = {
+	constructor: EventTarget,
+	addHandler: function (type, handler) {
+		// if (typeof this.handlers[type] == 'undefined') {
+		// 	this.handlers[type] = [];
+		// }
+		// this.handlers[type].push(handler);
+		
+		if (typeof this.handlers[type] == 'undefined') {
+			this.handlers[type] = [];
+		}
+	    var handlers = Array.prototype.slice.call(arguments, 1);
+	    for (let i = 0, len = handlers.length; i < len; i++) {
+	    	this.handlers[type].push(handlers[i]);
+	    }
+	    //不能用回调函数，this会丢失
+	    // handlers.forEach(function (item, index, array) {
+	    // 	this.handlers[type].push(item);
+	    // })
+	},
+	fire: function (event) {
+		if (!event.target) {
+			event.target = this;
+		}
+		if (this.handlers[event.type] instanceof Array) {
+			var handlers = this.handlers[event.type];
+			for (var i = 0, len = handlers.length; i < len; i++) {
+				handlers[i](event);
+			}
+		}
+	},
+	removeHandler: function (type, handler) {
+		if (this.handlers[type] instanceof Array) {
+			var handlers = this.handlers[type];
+			// for (var i = 0, len = handlers.length; i < len; i++) {
+			// 	if (handlers[i] === handler) {
+			// 		break;
+			// 	}
+			// }
+			// handlers.splice(i, 1);
+			var i = handlers.indexOf(handler);
+			if (i != -1) {
+		        handlers.splice(i, 1);					
+			}
+		}
+	}
+};
+
+function handleMessage (event) {
+	console.log(event.message);
+}
+function handleAge (event) {
+	console.log(event.age);
+}
+function handleMessage1() {
+
+}
+
+// //创建一个新对象
+// var target = new EventTarget();
+// //添加一个事件处理程序
+// target.addHandler('message', handleMessage, handleAge);
+// // target.addHandler('message', handleAge);
+// //触发事件
+// target.fire({ type: 'message', message: 'Hello world!', age: 12 });
+// //删除事件处理程序
+// target.removeHandler('message', handleAge);
+// target.fire({ type: 'message', message: 'liuhailin!', age: 14});
+
+function Person (name, profession) {
+	EventTarget.call(this);
+	this.name = name;
+	this.profession = profession;
+}
+Person.prototype = new EventTarget();
+Person.prototype.constructor = Person;
+Person.prototype.say = function(message) {
+	this.fire({ type: 'message', message: message });
+};
+
+function showInfo (event) {
+	console.log(event.target.profession + ' says: ' + event.message);
+}
+var person = new Person('Nicholas', 100);
+person.addHandler('message', showInfo);
+person.say('Hi there.');
