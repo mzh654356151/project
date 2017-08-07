@@ -21,9 +21,11 @@ var EventUtil = {
     getEvent:function (event) {
         return event || window.event
     },
+    //获取事件目标
     getTarget: function (event) {
         return event.target || event.srcElement
     },
+    //取消事件的默认行为
     preventDefault: function (event) {
         if (event.preventDefault) {
             event.preventDefault();
@@ -31,6 +33,7 @@ var EventUtil = {
             event.returnValue = false;
         }
     },
+    //立即停止事件在DOM层次中的传播，即取消进一步的事件捕获或冒泡
     stopPropagation: function (event) {
         if (event.stopPropagation) {
             event.stopPropagation();
