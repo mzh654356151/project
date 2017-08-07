@@ -1,5 +1,5 @@
 function EventTarget () {
-	this.handlers = {};
+    this.handlers = {};
 }
 //一种事件类型的事件处理程序可能有多个，所以用数组保存起来
 EventTarget.prototype = {
@@ -51,10 +51,10 @@ EventTarget.prototype = {
 };
 
 function handleMessage (event) {
-	console.log(event.message);
+    console.log(event.message);
 }
 function handleAge (event) {
-	console.log(event.age);
+    console.log(event.age);
 }
 function handleMessage1() {
 
@@ -72,9 +72,9 @@ function handleMessage1() {
 // target.fire({ type: 'message', message: 'liuhailin!', age: 14});
 
 function Person (name, profession) {
-	EventTarget.call(this);
-	this.name = name;
-	this.profession = profession;
+    EventTarget.call(this);
+    this.name = name;
+    this.profession = profession;
 }
 Person.prototype = new EventTarget();
 Person.prototype.constructor = Person;
