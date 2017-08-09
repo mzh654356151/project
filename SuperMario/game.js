@@ -86,7 +86,7 @@ var canvas = document.getElementById('canvas'),
 
 var ImgCache = {};
 loadImage([
-	{ id: 'bg', src: 'res/bg.png' },
+    { id: 'bg', src: 'res/bg.png' },
     { id: 'player', src: 'res/player.png' }
 ], startDemo)
 
