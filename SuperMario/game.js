@@ -76,7 +76,6 @@ function startDemo () {
 
 }
 
-
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d');
 // var ImgCache = loadImage([
