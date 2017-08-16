@@ -1,8 +1,6 @@
 
 function createEnemy(){
-
-	var r=genRandom(0,1);
-		
+	var r=genRandom(0,1);	
 	var cfg = {
 		img : "enemy",
 
