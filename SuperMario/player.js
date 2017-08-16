@@ -1,5 +1,4 @@
 
-
 function createPlayer(){
 	
 	var cfg = {
