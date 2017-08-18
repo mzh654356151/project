@@ -25,6 +25,7 @@ function createEnemy () {
 				this.x = this.minX;
 				this.speedX = moveSpeed;
 			} else if (this.x >= this.maxX){
+				//当移动在x轴最大值maxX时，速度变为负值，往回跑
 				this.x = this.maxX;
 				this.speedX = -moveSpeed;
 			}
