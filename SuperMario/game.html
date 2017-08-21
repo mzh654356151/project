@@ -2,28 +2,42 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Super Mario</title>
-    <style type="text/css">
-        body {
-          margin: 0;
-          font: 16px/1.2 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-        #canvas {
-          margin-top: 20px;
-          margin-left: 20px;
+	<title>小游戏</title>
+	<style type="text/css">
+	    body {
+	    	margin: 0;
+	    	font: 16px/1.2 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	    }
+	    .main {
+            width: 600px;
+	    	margin-top: 30px;
+	    	margin-left: 30px;
 
+	    }
+        .score {
+            text-align: center;
         }
-    </style>
+        .restart {
+            display: none;
+            border: 1px solid #00c8ff;
+            border-radius: 3px;            
+            background: none;
+        }
+	</style>
 </head>
 <body>
-  <canvas id="canvas" width="600" height="400">background of Super Mario</canvas>
-  
-  <script type="text/javascript" src="Base.js"></script>
-  <script type="text/javascript" src="Animation.js"></script>
-  <script type="text/javascript" src="Sprite.js"></script>
-  <script type="text/javascript" src="main.js"></script>
-  <script type="text/javascript" src="player.js"></script>
-  <script type="text/javascript" src="enemy.js"></script>
-  <script type="text/javascript" src="game.js"></script>
+  <div class="main">
+    <div class="score">您的时间为<strong></strong>秒</div>
+    <canvas id="canvas" width="600" height="400">background of Super Mario</canvas>
+    <button class="restart">重新开始</button>
+  </div>
+
+  <script type="javascript" src="res/Base.js"></script>
+  <script type="javascript" src="res/Animation.js"></script>
+  <script type="javascript" src="res/Sprite.js"></script>
+  <script type="javascript" src="res/main.js"></script>
+  <script type="javascript" src="res/player.js"></script>
+  <script type="javascript" src="res/enemy.js"></script>
+  <script type="javascript" src="game.js"></script>
 </body>
 </html>
