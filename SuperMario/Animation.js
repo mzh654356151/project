@@ -2,10 +2,10 @@
 //JS逐帧动画
 // Animation构造函数，
 // cfg参数为一个对象，包括图片的名称img和动画的帧frames
-function Animation (cfg) {
-	//枚举对象的属性
-	for (var attr in cfg ) {
-		this[attr] = cfg[attr];
+function Animation (animArgs) {
+	//枚举对象的属性(属性必须是可枚举的  enumerable为true)
+	for (var attr in animArgs ) {
+		this[attr] = animArgs[attr];
 	}
 }
 
@@ -20,7 +20,8 @@ Animation.prototype = {
 	img: null,
 	currentFrame: null,
 	currentFrameIndex: -1,
-	currentFramePlayed: -1,
+	//currentFramePlayed用于当前帧已经播放的时间
+	currentFramePlayed: 0,
 	
 	// 初始化Animation
 	init: function () {
@@ -34,7 +35,7 @@ Animation.prototype = {
 		this.setFrame(0);
 	},
 	
-	//设置当前帧
+	//设置当前帧信息
 	setFrame: function (index) {
 		this.currentFrameIndex = index;
 		this.currentFrame = this.frames[index];
