@@ -1,1 +1,12 @@
-
+一 优化JavaScript
+  1.将JavaScript脚本放在<body>标签的底部。如果放在头部，脚本会阻塞整个页面的下载渲染，如果脚本文件文件过大会造成明显的延迟(空白页面),用户体验不佳
+  2.合并script文件。HTTP请求会带来额外的性能开销，举例，下载单个100KB的文件将比下载4个25KB的文件更快。减少页面中外联脚本文件的数量将会改善性能。
+    使用打包工具
+  3.动态脚本元素，
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'script.js';
+    document.body.appendChild(script);
+    文件的下载和执行过程不会阻塞页面其它进程，添加一个load事件，触发时表示脚本下载完成。
+    
+二 数据访问 
