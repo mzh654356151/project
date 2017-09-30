@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title>throttle</title>
+</head>
+<body>
+  <canvas id="canvas" width="500" height="500" ></canvas>
+  <button id="pause">pause</button>
+  <style type="text/css">
+    body {
+        background-color: lightgray;
+    }
+    #pause {
+        width: 50px;
+        height: 20px;
+        line-height: 10px;
+        font-style: italic;
+        border: 1px solid #0ff;
+        border-radius: 3px;
+        background-color: white;
+    }
+  </style>
+  <script type="text/javascript"> 
+     var canvas = document.getElementById('canvas');
+     var context = canvas.getContext('2d');
+     context.lineWidth = 17;
+     context.shadowBlur = 15;
 
+     function degToRadian (degree) {
+        //角度转为弧度，180对应pi；
+        var factor = Math.PI / 180;
+        return degree * factor
+     }
+     
+     function renderTime () {
+        var now = new Date();
+        var today = now.toDateString();
+        var curTime = now.toLocaleTimeString();
+        var hour = now.getHours();
+        var minute = now.getMinutes();
+        var second = now.getSeconds();
+        var milli = now.getMilliseconds();
+        var smoothsec = second + (milli / 1000);
+        var smoothmin = minute + (smoothsec / 60);
+
+        //gradient渐变，渐变的开始圆的x坐标，y坐标，圆的开始半径，
+        //渐变的结束圆的x坐标，y坐标，结束圆的半径。
+        gradient = context.createRadialGradient(250, 250, 5, 250, 250, 300);
+        gradient.addColorStop(0, '#595963');
+        gradient.addColorStop(1, 'black');
+        context.fillStyle = gradient;
+        //context.fillRext = rgba(00, 00, 00, 1);
+        context.fillRect(0, 0, 500, 500);
+
+        //hours时针 
+        context.beginPath();
+        context.strokeStyle = '#1b22a1';
+        context.shadowColor = '#1b22a1';
+        //时针共有12个小时每个间隔为360/12=30度             
+        context.arc(250, 250, 200, degToRadian(270), degToRadian((hour * 30) - 90));
+        context.stroke();
+
+        //minutes分针
+        context.beginPath();
+        context.strokeStyle = '#00ffff';
+        context.shadowColor = '#00ffff';   
+        // 360/60
+        context.arc(250, 250, 170, degToRadian(270), degToRadian((smoothmin * 6) - 90));
+        context.stroke();
+
+        //second秒针
+        context.beginPath();
+        context.strokeStyle = '#8a8edb';
+        context.shadowColor = '#8a8edb';           
+        context.arc(250, 250, 140, degToRadian(270), degToRadian((smoothsec * 6) - 90));
+        context.stroke();
+        //文字日期
+        context.font = '25px Helvetica';
+        context.fillStyle = 'rgba(125, 255, 255, 1)';
+        context.fillText(today, 160, 250);
+        //文字时间
+        context.font = '25px Helvetica Bold';
+        context.fillStyle = 'rgba(125, 255, 255, 1)';
+        context.fillText(curTime + ':' + milli, 160, 280);
+
+     }
+     var cancel = setInterval(renderTime, 40);
+     var judge = true;
+     document.getElementById('pause').addEventListener('click', function (event) {
+        if (judge) {
+            clearInterval(cancel);
+        } else {
+            cancel = setInterval(renderTime, 40);
+        }
+        judge = !judge;
+     }, false);
+
+  </script>
+</body>
+</html>
