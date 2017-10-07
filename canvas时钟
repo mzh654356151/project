@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-	<title>throttle</title>
-	<style type="text/css">
-	body {
+    <title>throttle</title>
+    <style type="text/css">
+    body {
 	background-color: lightgray;
-	}
-	#pause {
+    }
+    #pause {
 	width: 50px;
 	height: 20px;
 	line-height: 10px;
@@ -15,8 +15,8 @@
 	border: 1px solid #0ff;
 	border-radius: 3px;
 	background-color: white;
-	}
-	</style>	
+    }
+    </style>	
 </head>
 <body>
   <canvas id="canvas" width="500" height="500" ></canvas>
