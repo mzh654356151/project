@@ -3,24 +3,25 @@
 <head>
     <meta charset="utf-8">
 	<title>throttle</title>
+	<style type="text/css">
+	body {
+	background-color: lightgray;
+	}
+	#pause {
+	width: 50px;
+	height: 20px;
+	line-height: 10px;
+	font-style: italic;
+	border: 1px solid #0ff;
+	border-radius: 3px;
+	background-color: white;
+	}
+	</style>	
 </head>
 <body>
   <canvas id="canvas" width="500" height="500" ></canvas>
   <button id="pause">pause</button>
-  <style type="text/css">
-    body {
-        background-color: lightgray;
-    }
-    #pause {
-        width: 50px;
-        height: 20px;
-        line-height: 10px;
-        font-style: italic;
-        border: 1px solid #0ff;
-        border-radius: 3px;
-        background-color: white;
-    }
-  </style>
+
   <script type="text/javascript"> 
      var canvas = document.getElementById('canvas');
      var context = canvas.getContext('2d');
