@@ -1,5 +1,51 @@
 1.客户端浏览器轮询服务器
   原理是在客户端通过ajax定时向服务器发送一个HTTP请求，然后服务器返回最新的数据，这样就间接实现即时通信，优点就是简单，缺点是服务器的压力大浪费带宽
+  //ajax
+  function createXHR(){
+        if(typeof XMLHttpRequest !='undefined'){
+            return new XMLHttpRequest();
+        }else if(typeof ActiveXObject !='undefined' ){
+            //兼容ie7及更早版本，来自JavaScript高程
+            if(typeof arguments.callee.activeXString!="string"){
+            var versions=["MSXML2.XMLHttp.6.0","MSXML2.XMLHttp.3.0",
+                    "MSXML2.XMLHttp"],
+                    i,len;
+            for(i=0,len=versions.length;i<len;i++){
+                try{
+                    new ActiveXObject(versions[i]);
+                    arguments.callee.activeXString=versions[i];
+                    break;
+                }catch(ex) {
+ 
+                }
+            }
+        }
+        return new ActiveXObject(arguments.callee.activeXString);
+       }else{
+            throw new Error("no xhr object available");
+        }
+    }
+    function polling(url,method,data){
+       method=method ||'get';
+       data=data || null;
+       var xhr=createXHR();
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4){
+                if(xhr.status>=200&&xhr.status<300||xhr.status==304){
+                    console.log(xhr.responseText);
+                }else{
+                    console.log("fail");
+                }
+            }
+        };
+        xhr.open(method,url,true);
+        xhr.send(data);
+    }
+    //定时器
+    setInterval(function(){
+        polling('http://localhost:8088/time','get');
+    },2000);
+
 
 
 2.Comet-长轮询(long-polling)
@@ -7,15 +53,113 @@
   发送完数据之后，浏览器关闭连接，随即又发送一个到服务器的新请求。这一过程在页面打开期间一直持续不断。
   
 3.Comet-HTTP流（http-stream）
-  使用HTTP流在页面的整个生命周期内只有 一个 HTTP连接，
+  使用HTTP流在页面的整个生命周期内只有 一个 HTTP连接，具体来说，就是浏览器向服务器发送一个请求，而服务器保持连接打开，然后周期性向浏览器发送数据。
 
 
+4.服务器发送事件(Server-Sent Events)，客户端请求服务器，然后服务器利用与客户端建立的这条通信连接push数据给客户端，客户端接收数据并处理的模式，
+  服务器响应的MIME类型必须是text/event-stream。核心对象为EventSource,readyState属性，值为0表示正连接到服务器，1位打开连接，2位关闭连接。三个
+  事件，open在连接时触发。message在从服务器接收到新事件时触发，error在无法建立连接时候触发。
+  //client
+  var source = new EventSource('http://localhost:8888/sse');
+      source.onmessage = function (event) {
+          handle(event.data);
+      }
+      source.onopen = function (event) {
+          console.log('connected');
+      }
+      source.onerror = function (error) {
+          console.log(error);
+      }
+   function handle () {
+       //todo
+   }
+   
+    //server
+    var http=require('http');
+    var fs = require("fs");
+    var count=0;
+    var server=http.createServer(function(req,res){
+        if(req.url=='/evt'){
+            //res.setHeader('content-type', 'multipart/octet-stream');
+            res.writeHead(200, {"Content-Type":"tex" +
+                "t/event-stream", "Cache-Control":"no-cache",
+                'Access-Control-Allow-Origin': '*',
+                "Connection":"keep-alive"});
+            var timer=setInterval(function(){
+                if(++count==10){
+                    clearInterval(timer);
+                    res.end();
+                }else{
+                    res.write('id: ' + count + '\n');
+                    res.write("data: " + new Date().toLocaleString() + '\n\n');
+                }
+            },2000);
 
-
-
-
-
-
+        };
+        if(req.url=='/'){
+            fs.readFile("./sse.html", "binary", function(err, file) {
+                if (!err) {
+                    res.writeHead(200, {'Content-Type': 'text/html'});
+                    res.write(file, "binary");
+                    res.end();
+                }
+            });
+        }
+    });
+    server.listen(8888,'localhost');
+      
+5. WebSocket
+   Websockets的目标是建立一个单独的持久连接提供全双工，双向通信。在JavaScript中创建WebSocket之后，会有一个HTTP请求发送到服务端，
+   服务端发现这是个webscoket请求，会同意协议转换，发送回客户端一个101状态码的response，以上过程称之为一次握手，经过这次握手之后，
+   客户端就和服务端建立了一条TCP连接，在该连接上，服务端和客户端就可以进行双向通信了。这时的双向通信在应用层走的就是ws或者wss协议了，
+   和http就没有关系了。
+   
+   //client
+   var ws=new WebSocket("ws://127.0.0.1:8888");
+       ws.onopen=function(){
+ 
+        };
+        ws.onmessage=function(msg){
+        
+        };
+        ws.onclose=function(event){
+            console.log("已断开与服务器的连接");
+            ws.close();
+        }
+   //server
+   var crypto = require('crypto');
+   var WS = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
+   var server=require('net').createServer(function (socket) {
+    var key;
+    socket.on('data', function (msg) {
+        if (!key) {
+            //获取发送过来的Sec-WebSocket-key首部
+            key = msg.toString().match(/Sec-WebSocket-Key: (.+)/)[1];
+            key = crypto.createHash('sha1').update(key + WS).digest('base64');
+            socket.write('HTTP/1.1 101 Switching Protocols\r\n');
+            socket.write('Upgrade: WebSocket\r\n');
+            socket.write('Connection: Upgrade\r\n');
+            //将确认后的key发送回去
+            socket.write('Sec-WebSocket-Accept: ' + key + '\r\n');
+            //输出空行，结束Http头
+            socket.write('\r\n');
+        } else {
+            var msg=decodeData(msg);
+            console.log(msg);
+            //如果客户端发送的操作码为8,表示断开连接,关闭TCP连接并退出应用程序
+            if(msg.Opcode==8){
+                socket.end();
+                server.unref();
+            }else{
+                socket.write(encodeData({FIN:1,
+                    Opcode:1,
+                    PayloadData:"接受到的数据为"+msg.PayloadData}));
+            }
+ 
+        }
+    });
+});
+    server.listen(8000,'localhost');
 
 
 
